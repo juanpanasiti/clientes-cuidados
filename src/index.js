@@ -1,17 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { GraphQLClient, ClientContext } from 'graphql-hooks';
+import { ClientesCuidadosApp } from './ClientesCuidadosApp';
+import env from 'react-dotenv';
+
+const client = new GraphQLClient({
+    url: 'https://graphql.datocms.com/',
+    headers: {
+        'Authorization': `Bearer ${env.DATOCMS_API_KEY}`
+    }
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <ClientContext.Provider value={client}>
+        <ClientesCuidadosApp />
+    </ClientContext.Provider>,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
